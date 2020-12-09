@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/springboot-mybatis-plus" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-redis-session" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-security-test" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-securitydemo1" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-shiro-demo" charset="UTF-8" />
+  </component>
+</project>
