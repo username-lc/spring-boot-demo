@@ -1,7 +1,5 @@
 package cn.lc.common.config;
 
-import cn.lc.common.service.RedisService;
-import cn.lc.common.service.impl.RedisServiceImpl;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
