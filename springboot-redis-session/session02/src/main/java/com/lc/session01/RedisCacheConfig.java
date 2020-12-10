@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Configuration
 @EnableCaching
-public class RedisCacheConfig  extends CachingConfigurerSupport {
+public class RedisCacheConfig extends CachingConfigurerSupport {
     Logger logger = LoggerFactory.getLogger(RedisCacheConfig.class);
     @Value("${spring.redis.host}")
     private String host;
