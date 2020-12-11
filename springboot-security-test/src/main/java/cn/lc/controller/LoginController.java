@@ -15,7 +15,7 @@ public class LoginController {
     public String showHome() {
         //获取当前登录用户：SecurityContextHolder.getContext().getAuthentication()
 //        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-//        logger.info("当前登陆用户：" + name);
+//        logger.info("当前登录用户：" + name);
         return "home";
     }
 

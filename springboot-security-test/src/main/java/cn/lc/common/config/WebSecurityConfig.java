@@ -73,11 +73,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers().permitAll()
                 .anyRequest().authenticated()
                 .and()
-                // 设置登陆页
+                // 设置登录页
                 .formLogin().loginPage("/login")
                 .successHandler(new RestAuthenticationSuccessHandler())
-                // 设置登陆成功页
-                // 自定义登陆用户名和密码参数，默认为username和password
+                // 设置登录成功页
+                // 自定义登录用户名和密码参数，默认为username和password
 //                .usernameParameter("username")
 //                .passwordParameter("password")
                 .and()
@@ -97,7 +97,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Rest 登陆成功后的处理
+     * Rest 登录成功后的处理
      */
     public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         @Override

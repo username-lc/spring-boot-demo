@@ -1,6 +1,7 @@
 package cn.lc.common.handler;
 
 
+import cn.lc.bean.SysUser;
 import cn.lc.common.service.RedisService;
 import cn.lc.common.util.RedisKeyUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class RedisHandler {
 
     /**
      * redis缓存
-     * 保存/刷新   园所信息
+     * 保存/刷新   token
      *
      * @param username
      * @param token
@@ -45,7 +46,7 @@ public class RedisHandler {
 
     /**
      * redis缓存
-     * 获取   园所信息
+     * 获取   token
      *
      * @param username
      */
@@ -56,13 +57,25 @@ public class RedisHandler {
 
     /**
      * redis缓存
-     * 删除   园所信息
+     * 删除   token
      *
      * @param username
      */
     public void deleteToken(String username) {
         String redisKey = RedisKeyUtil.getRedisKey(USER_LOGIN_TOKEN_KEY, username);
         redisService.delete(redisKey);
+    }
+
+    /**
+     * redis缓存
+     * 保存/刷新   USER
+     *
+     * @param username
+     * @param sysUser
+     */
+    public void setUser(String username, SysUser sysUser) {
+        String redisKey = RedisKeyUtil.getRedisKey("user:%s", username);
+        redisService.set(redisKey, sysUser, timeout);
     }
 
 }

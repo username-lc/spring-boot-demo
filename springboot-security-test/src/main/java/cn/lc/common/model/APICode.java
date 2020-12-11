@@ -47,44 +47,6 @@ public class APICode {
     public final static int _C_NO_DATA_ERROR = 1003;
     public final static BaseCode NO_DATA_ERROR = new BaseCode(_C_NO_DATA_ERROR, "无数据");
 
-    public final static int _C_IMPORT_ERROR = 1004;
-    public final static BaseCode IMPORT_ERROR = new BaseCode(_C_IMPORT_ERROR, "导入失败");
-
-    public final static int _TIMETABLE_ALREADY_EXISTS = 1005;
-    public final static BaseCode TIMETABLE_ALREADY_EXISTS = new BaseCode(_TIMETABLE_ALREADY_EXISTS, "课程表已存在");
-
-    public final static int _TIMETABLE_NOT_EXISTS = 1006;
-    public final static BaseCode TIMETABLE_NOT_EXISTS = new BaseCode(_TIMETABLE_NOT_EXISTS, "课程表不存在");
-
-    public final static int _CODE_ALREADY_EXISTS = 1007;
-    public final static BaseCode CODE_ALREADY_EXISTS = new BaseCode(_CODE_ALREADY_EXISTS, "code已存在");
-
-    public final static int _MISSING_CONFIGURATION_INFORMATION = 1008;
-    public final static BaseCode MISSING_CONFIGURATION_INFORMATION = new BaseCode(_MISSING_CONFIGURATION_INFORMATION, "缺少配置信息");
-
-    public final static int _CURRENTTERM_NOT_EXISTS = 1009;
-    public final static BaseCode CURRENTTERM_NOT_EXISTS = new BaseCode(_CURRENTTERM_NOT_EXISTS, "当前学期信息不存在");
-
-    public final static int _CURRENTYEAR_NOT_EXISTS = 1009;
-    public final static BaseCode CURRENTYEAR_NOT_EXISTS = new BaseCode(_CURRENTYEAR_NOT_EXISTS, "当前学年信息不存在");
-
-    public final static int _C_USER_PERMISSION_ERROR = 10020;
-    public final static BaseCode USER_PERMISSION_ERROR = new BaseCode(_C_USER_PERMISSION_ERROR, "用户没有权限操作");
-
-    // cms flag code
-    public final static int _CMS_WEB_FLAG = 10000;
-
-    // vo flag code
-    public final static int _USER_SERVICE_FLAG = 20000;
-
-    // api flag code
-    public final static int _API_WEB_FLAG = 30000;
-
-    // product flag code
-    public final static int _PRODUCT_SERVICE_FLAG = 40000;
-
-    // trade flag code
-    public final static int _TRADE_SERVICE_FLAG = 50000;
 
     public static BaseCode ok(String message) {
         return new BaseCode(_C_OK, message);

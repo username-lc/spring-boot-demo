@@ -1,39 +1,22 @@
 package cn.lc.bean;
 
+import lombok.Data;
+import lombok.ToString;
+
 import java.io.Serializable;
 
+@Data
+@ToString
 public class SysUser implements Serializable {
-    static final long serialVersionUID = 1L;
+
+    /**
+     * 序列化id
+     */
+    private static final long serialVersionUID = 4125096758084309L;
 
     private Integer id;
 
     private String name;
 
     private String password;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    // 省略getter/setter
 }

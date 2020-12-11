@@ -22,7 +22,6 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -34,10 +33,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * jedis配置文件
+ * redis配置文件
  */
 @Configuration
 @EnableCaching
+//@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 30)
 public class RedisConfig extends CachingConfigurerSupport {
     Logger logger = LoggerFactory.getLogger(RedisConfig.class);
     @Value("${spring.redis.host}")
@@ -140,7 +140,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      * @return org.springframework.data.redis.core.RedisTemplate
      */
     @Bean(name = "redisTemplate")
-    public RedisTemplate<?, ?> redisTemplate(JedisConnectionFactory factory, RedisSerializer jackson2JsonRedisSerializer) {
+    public RedisTemplate<?, ?> redisTemplate(JedisConnectionFactory factory, Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
         RedisTemplate<?, ?> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
 
@@ -161,21 +161,23 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    public CacheManager cacheManager(RedisConnectionFactory factory, RedisSerializer jackson2JsonRedisSerializer) {
+    public CacheManager cacheManager(RedisConnectionFactory factory, Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
         //生成一个默认配置 通过config对象即可对缓存进行自定义配置
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
-        //设置缓存有效期1小时
-        config.entryTtl(Duration.ofMinutes(1))     // 设置缓存的默认过期时间，也是使用Duration设置
+        config.entryTtl(Duration.ofMinutes(1))     // 设置缓存的默认过期时间1小时，也是使用Duration设置
                 .disableCachingNullValues();     // 不缓存空值
 
+        //实例化key的序列化器对象
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        RedisSerializationContext.SerializationPair<Object> pairValue = RedisSerializationContext.SerializationPair
-                .fromSerializer(jackson2JsonRedisSerializer);
         RedisSerializationContext.SerializationPair<String> pairKey = RedisSerializationContext.SerializationPair
                 .fromSerializer(stringRedisSerializer);
+
+        RedisSerializationContext.SerializationPair<Object> pairValue = RedisSerializationContext.SerializationPair
+                .fromSerializer(jackson2JsonRedisSerializer);
         //序列化
-        config.serializeValuesWith(pairValue);
         config.serializeKeysWith(pairKey);
+        config.serializeValuesWith(pairValue);
+
         // 设置一个初始化的缓存空间set集合
         Set<String> cacheNames = new HashSet<>();
         cacheNames.add("my-redis-cache1");
@@ -187,6 +189,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         //configMap.put("my-redis-cache2", config.entryTtl(Duration.ofSeconds(120)));
         logger.info("RedisCacheManager 注入成功！");
         return RedisCacheManager.builder(factory)     // 使用自定义的缓存配置初始化一个cacheManager
+                .cacheDefaults(config)
                 .initialCacheNames(cacheNames)  // 注意这两句的调用顺序，一定要先调用该方法设置初始化的缓存名，再初始化相关的配置
                 .withInitialCacheConfigurations(configMap)
                 .build();
@@ -198,15 +201,15 @@ public class RedisConfig extends CachingConfigurerSupport {
      * @return
      */
     @Bean
-    public KeyGenerator keyGenerator() {
+    public KeyGenerator myKeyGenerator() {
         return new KeyGenerator() {
             @Override
             public Object generate(Object target, Method method, Object... params) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(target.getClass().getName());
-                sb.append(method.getName());
+                sb.append(":").append(method.getName());
                 for (Object obj : params) {
-                    sb.append(obj.toString());
+                    sb.append(":").append(obj.toString());
                 }
                 return sb.toString();
             }

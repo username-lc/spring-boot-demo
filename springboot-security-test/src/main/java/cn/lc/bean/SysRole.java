@@ -1,7 +1,12 @@
 package cn.lc.bean;
 
+import lombok.Data;
+import lombok.ToString;
+
 import java.io.Serializable;
 
+@Data
+@ToString
 public class SysRole implements Serializable {
     static final long serialVersionUID = 1L;
 
@@ -9,22 +14,4 @@ public class SysRole implements Serializable {
 
     private String name;
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    // 省略getter/setter
 }
