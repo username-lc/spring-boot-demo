@@ -52,12 +52,12 @@
         <!--注入 全局策略-->
         <property name="globalConfig" ref="globalConfiguration"></property>
     </bean>
-    <!-- 2. 扫描Mapper映射配 -->
-    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <!-- 2. 扫描Mapper映射配置 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-        &lt;!&ndash; 扫描所有的mapper接口 加入到IOC容器中 &ndash;&gt;
+        <!-- 扫描所有的mapper接口 加入到IOC容器中 -->
         <property name="basePackage" value="cn.lc.springmybatisplus.mapper"/>
-    </bean>-->
+    </bean>
 
     <!-- **********		批量执行的SqlSession		********** -->
     <!--<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
@@ -71,6 +71,8 @@
         <property name="dbColumnUnderline" value="true"></property>
         <!--主键自增 不用所有实体类配置 @TableId(type = IdType.AUTO )-->
         <property name="idType" value="0"></property>
+        <!--全局表前缀配置-->
+        <!--<property name="tablePrefix" value="p_"></property>-->
     </bean>
 
 </beans>
