@@ -6,7 +6,10 @@
 
     <groupId>cn.lc</groupId>
     <artifactId>spring-boot-demo</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-
+    <modules>
+        <module>spring-mybatis-plus</module>
+    </modules>
 
 </project>
