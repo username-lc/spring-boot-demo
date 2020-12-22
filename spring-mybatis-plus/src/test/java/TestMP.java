@@ -1,5 +1,7 @@
 import cn.lc.springmybatisplus.bean.User;
 import cn.lc.springmybatisplus.mapper.UserMapper;
+import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -77,4 +79,72 @@ public class TestMP {
         List<User> users2 = userMapper.selectPage(new Page(2,2), null);
         System.out.println(users2);
     }
+
+
+    /**
+     * 条件构造器查询  查询
+     */
+    @Test
+        public void entityWrapperSelect() {
+        EntityWrapper<User> wrapper = new EntityWrapper<User>();
+        wrapper.between("age",20,28);
+        wrapper.eq("name","lc");
+        wrapper.like("email","12");
+        List<User> users = userMapper.selectList(wrapper);
+        System.out.println(users);
+    }
+
+    /**
+     * 条件构造器查询  修改
+     */
+    @Test
+    public void entityWrapperUpdate() {
+        User user = new User();
+        user.setName("Jack");
+        EntityWrapper<User> wrapper = new EntityWrapper<User>();
+        wrapper.between("age",20,22);
+        wrapper.eq("name","lc");
+        wrapper.like("email","12");
+        Integer update = userMapper.update(user, wrapper);
+        System.out.println(update);
+    }
+
+    /**
+     * 条件构造器查询  删除
+     */
+    @Test
+    public void entityWrapperDelete() {
+        EntityWrapper<User> wrapper = new EntityWrapper<User>();
+        wrapper.between("age",20,26);
+        wrapper.eq("name","lc");
+        wrapper.like("email","12");
+        Integer update = userMapper.delete(wrapper);
+        System.out.println(update);
+    }
+
+    /**
+     * 条件构造器查询  查询排序
+     */
+    @Test
+    public void entityWrapperOrder() {
+        EntityWrapper<User> wrapper = new EntityWrapper<User>();
+        wrapper.eq("age",28);
+        wrapper.orderBy("id",false);
+        List<User> users = userMapper.selectList(wrapper);
+        System.out.println(users);
+    }
+
+    /**
+     * 条件构造器查询  condition查询
+     */
+    @Test
+    public void entityConditionSelect() {
+        Condition condition = Condition.create();
+        condition.between("age",20,28);
+        condition.eq("name","lc");
+        condition.like("email","12");
+        List<User> users = userMapper.selectList(condition);
+        System.out.println(users);
+    }
+
 }
