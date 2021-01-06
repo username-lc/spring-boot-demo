@@ -6,11 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Wrapper;
 
 /**
  * @Author lc
@@ -49,16 +49,27 @@ public class UserController {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("id");
 
-        queryWrapper.like("name","t").or();
-        queryWrapper.like("email","t");
+        queryWrapper.like("name", "t").or();
+        queryWrapper.like("email", "t");
 
         Page<User> userPage = userMapper.selectPage(page, queryWrapper);
-        System.out.println("总页码："+page.getTotal());
-        System.out.println("当前页码："+page.getCurrent());
-        System.out.println("总页码："+page.getPages());
-        System.out.println("每页显示的条数："+page.getSize());
-        System.out.println("是否有上一页："+page.hasPrevious());
-        System.out.println("是否有下一页："+page.hasNext());
+        System.out.println("总页码：" + page.getTotal());
+        System.out.println("当前页码：" + page.getCurrent());
+        System.out.println("总页码：" + page.getPages());
+        System.out.println("每页显示的条数：" + page.getSize());
+        System.out.println("是否有上一页：" + page.hasPrevious());
+        System.out.println("是否有下一页：" + page.hasNext());
         return userPage;
+    }
+
+
+    @GetMapping(value = "/updateAll")
+    public void updateAll() {
+        User user = new User();
+        user.setName("liu");
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        //queryWrapper.eq("id",1);
+        int update = userMapper.update(user, queryWrapper);
+        System.out.println("更新行数：" + update);
     }
 }
