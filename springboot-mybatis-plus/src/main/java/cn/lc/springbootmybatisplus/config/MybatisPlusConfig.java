@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
 import com.baomidou.mybatisplus.extension.parsers.BlockAttackSqlParser;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.SqlExplainInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,5 +48,25 @@ public class MybatisPlusConfig {
         sqlParserList.add(new BlockAttackSqlParser());
         sqlExplainInterceptor.setSqlParserList(sqlParserList);
         return sqlExplainInterceptor;
+    }
+
+    /**
+     * 性能分析插件  3.2以上版本插件移除   推荐使用第三方
+     */
+
+
+    /**
+     * 乐观锁插件
+     * 当要更新一条记录的时候，希望这条记录没有被别人更新
+     * 乐观锁实现方式：
+     *
+     * 取出记录时，获取当前version
+     * 更新时，带上这个version
+     * 执行更新时， set version = newVersion where version = oldVersion
+     * 如果version不对，就更新失败
+     */
+    @Bean
+    public OptimisticLockerInterceptor OptimisticLockerInnerInterceptor() {
+        return new OptimisticLockerInterceptor();
     }
 }

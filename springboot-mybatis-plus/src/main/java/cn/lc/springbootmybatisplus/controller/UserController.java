@@ -72,4 +72,15 @@ public class UserController {
         int update = userMapper.update(user, queryWrapper);
         System.out.println("更新行数：" + update);
     }
+
+
+    @GetMapping(value = "/optimisticLocker")
+    public void update() {
+        User user = new User();
+        user.setId(1);
+        user.setName("liuc");
+        user.setVersion(1);
+        int update = userMapper.updateById(user);
+        System.out.println("更新行数：" + update);
+    }
 }
