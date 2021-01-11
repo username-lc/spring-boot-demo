@@ -51,6 +51,27 @@
         <property name="typeAliasesPackage" value="cn.lc.springmybatisplus.bean"/>
         <!--注入 全局策略-->
         <property name="globalConfig" ref="globalConfiguration"></property>
+
+        <!--插件注册-->
+        <property name="plugins">
+            <list>
+                <!--分页插件注册-->
+                <bean class="com.baomidou.mybatisplus.plugins.PaginationInterceptor"></bean>
+
+                <!--执行分析插件注册-->
+                <bean class="com.baomidou.mybatisplus.plugins.SqlExplainInterceptor">
+                    <!--停止删除修改全表操作-->
+                    <property name="stopProceed" value="true"></property>
+                </bean>
+
+                <!--性能分析插件注册-->
+                <bean class="com.baomidou.mybatisplus.plugins.PerformanceInterceptor">
+                    <property name="format" value="true"></property>
+                    <!--SQL 执行最大时长，超过自动停止运行，有助于发现问题。-->
+                    <!--<property name="maxTime" value="50"></property>-->
+                </bean>
+            </list>
+        </property>
     </bean>
     <!-- 2. 扫描Mapper映射配置 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -74,5 +95,7 @@
         <!--全局表前缀配置-->
         <!--<property name="tablePrefix" value="p_"></property>-->
     </bean>
+
+
 
 </beans>
