@@ -9,11 +9,6 @@ import java.io.Serializable;
 @ToString
 public class SysUser implements Serializable {
 
-    /**
-     * 序列化id
-     */
-    private static final long serialVersionUID = 4125096758084309L;
-
     private Integer id;
 
     private String name;

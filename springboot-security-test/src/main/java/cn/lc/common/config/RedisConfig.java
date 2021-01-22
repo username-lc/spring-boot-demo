@@ -140,7 +140,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      * @return org.springframework.data.redis.core.RedisTemplate
      */
     @Bean(name = "redisTemplate")
-    public RedisTemplate<?, ?> redisTemplate(JedisConnectionFactory factory, Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
+    public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory factory, Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
         RedisTemplate<?, ?> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
 

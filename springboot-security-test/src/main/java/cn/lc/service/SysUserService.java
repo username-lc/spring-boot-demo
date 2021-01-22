@@ -19,10 +19,14 @@ public class SysUserService {
         return userMapper.selectById(id);
     }
 
-    @Cacheable(value = "user", cacheManager="cacheManager",  keyGenerator = "myKeyGenerator")
+    //@Cacheable(value = "user", cacheManager = "cacheManager", keyGenerator = "myKeyGenerator")
     public SysUser selectByName(String name) {
-        SysUser sysUser = userMapper.selectByName(name);
-        //redisHandler.setUser(name,sysUser);
+        SysUser sysUser = redisHandler.getUserHash(name);
+        if (sysUser == null) {
+            sysUser = userMapper.selectByName(name);
+            //redisHandler.setUser(name,sysUser);
+            redisHandler.setUserHash(name, sysUser);
+        }
         return sysUser;
     }
 }

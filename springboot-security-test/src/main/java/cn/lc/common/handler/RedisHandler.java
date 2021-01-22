@@ -3,11 +3,14 @@ package cn.lc.common.handler;
 
 import cn.lc.bean.SysUser;
 import cn.lc.common.service.RedisService;
+import cn.lc.common.util.BeanUtil;
 import cn.lc.common.util.RedisKeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
  * redis处理者
@@ -76,6 +79,27 @@ public class RedisHandler {
     public void setUser(String username, SysUser sysUser) {
         String redisKey = RedisKeyUtil.getRedisKey("user:%s", username);
         redisService.set(redisKey, sysUser, timeout);
+    }
+
+
+    /**
+     * 保存hash结构
+     */
+    public void setUserHash(String username, SysUser sysUser) {
+        String redisKey = RedisKeyUtil.getRedisKey("user:%s", username);
+        redisService.redisHash().putAll(redisKey, BeanUtil.convertToMap(sysUser));
+    }
+
+
+    public SysUser getUserHash(String username){
+        String redisKey = RedisKeyUtil.getRedisKey("user:%s", username);
+        Map map = redisService.redisHash().entries(redisKey);
+        try {
+            return (SysUser) BeanUtil.mapToObject(map, SysUser.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
